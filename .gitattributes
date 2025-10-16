@@ -1,0 +1,39 @@
+# =============================================================================
+#  LINE ENDING NORMALIZATION
+#  Enforce LF line endings for all text files to ensure cross-platform consistency.
+# =============================================================================
+* text=auto eol=lf
+
+# =============================================================================
+#  DIFF DRIVERS
+#  Help Git generate more readable diffs for specific file types.
+# =============================================================================
+*.blade.php diff=html
+*.css diff=css
+*.html diff=html
+*.md diff=markdown
+*.php diff=php
+
+# =============================================================================
+#  BINARY FILES
+#  Explicitly mark common binary file types to prevent accidental corruption.
+# =============================================================================
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.svg binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+
+# =============================================================================
+#  ARCHIVE EXCLUSIONS
+#  Exclude development-specific files from repository archives (zip/tar downloads).
+# =============================================================================
+/.github export-ignore
+CHANGELOG.md export-ignore
+.styleci.yml export-ignore

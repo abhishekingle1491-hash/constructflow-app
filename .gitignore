@@ -1,0 +1,68 @@
+# =============================================================================
+#  ENVIRONMENT & SECRETS
+#  Never commit environment-specific files or sensitive credentials.
+# =============================================================================
+.env
+.env.*
+!.env.example
+
+# =============================================================================
+#  DEPENDENCIES
+#  These are installed by package managers and should not be in version control.
+# =============================================================================
+# PHP Dependencies
+/vendor/
+
+# JavaScript Dependencies
+/node_modules/
+
+# Python Dependencies (for future FastAPI service)
+/venv/
+/.venv/
+__pycache__/
+*.pyc
+
+# =============================================================================
+#  LARAVEL FRAMEWORK FILES
+#  Logs, cache, and other runtime-generated files.
+# =============================================================================
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/framework/cache/data/*
+/storage/logs/*.log
+/bootstrap/cache/*.php
+/public/storage
+/storage/*.key
+/storage/pail/*
+
+# =============================================================================
+#  COMPILED FRONTEND ASSETS
+#  These are built from source files (e.g., in /resources/js).
+# =============================================================================
+/public/build
+/public/hot
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =============================================================================
+#  IDE & OS-SPECIFIC FILES
+#  Editor-specific settings and OS-generated files.
+# =============================================================================
+.idea/
+.vscode/
+.fleet/
+.zed/
+*.swp
+.DS_Store
+Thumbs.db
+
+# =============================================================================
+#  MISCELLANEOUS
+# =============================================================================
+Homestead.yaml
+Homestead.json
+.phpunit.result.cache
+/.phpunit.cache
+.phpactor.json
+auth.json
