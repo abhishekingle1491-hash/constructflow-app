@@ -1,11 +1,12 @@
+// src/api/axiosClient.js
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: 'http://api.constructflow.test/api', // Use environment variables for production
-  withCredentials: true,
-  headers: {
-    'Accept': 'application/json',
-  },
+    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://api.constructflow.test/api',
+    withCredentials: true, // <-- THIS IS THE MISSING LINE
+    headers: {
+        'Accept': 'application/json',
+    },
 });
 
 export default axiosClient;
