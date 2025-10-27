@@ -24,7 +24,7 @@ class AuthRepository
 
             $orgId = DB::getPdo()->lastInsertId();
 
-            DB::insert('INSERT INTO users (organization_id, name, email, password, created_at, updated_at) VALUES (?,?,?,?, NOW(), NOW())', $userData['email'], $userData['password']);
+            DB::insert('INSERT INTO users (organization_id, name, email, password, created_at, updated_at) VALUES (?,?,?,?, NOW(), NOW())', [$orgId, $userData['name'], $userData['email'], $userData['password']]);
 
             $userId = DB::getPdo()->lastInsertId();
 
