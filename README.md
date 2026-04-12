@@ -1,61 +1,23 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<h2>About</h2>
+<p>This is a modern, cloud-native, all-in-one Software-as-a-Service (SaaS) platform template, built using Laravel, react.js, tailwindcss, mysql. </p>
+<p>Project follows a "stateless, API-driven backend service". This architectural choice is common in modern web development, promoting scalability and a clean separation of concerns between the frontend and backend. A developer's initial impulse when hearing "stateless API" is often to reach for token-based authentication, such as JSON Web Tokens (JWTs), stored on the client-side in browser storage mechanisms like localStorage.
+However, for a first-party SPA—where the frontend application and the backend API are developed and controlled by the same entity—the industry-standard and most secure approach is to leverage a stateful, cookie-based session mechanism. This is not a contradiction of the "stateless" principle but a nuanced and deliberate security posture.</p>
+<p>The application's business logic remains stateless; each API request from the frontend contains all the information needed for the backend to process it, without relying on the memory of previous requests. The authentication layer, however, is intentionally made stateful, managed by Laravel Sanctum's robust, built-in session handling services. This design provides superior security compared to storing bearer tokens in client-side browser storage.
+The decision to adopt a stateful authentication layer for a stateless application architecture resolves a common point of confusion by prioritizing security. While localStorage is accessible to any JavaScript running on the page, server-set cookies can be protected from such access, neutralizing a significant attack vector. This guide proceeds with the understanding that accepting statefulness at the authentication layer is a necessary trade-off to achieve a higher level of security for the overall application.
 </p>
 
-## About Laravel
+<h3>Login & Register</h3>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<img width="1898" height="958" alt="image" src="https://github.com/user-attachments/assets/1295c48e-3cf5-4919-8da8-d6b8d6724d6f" />
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<h3>Dashboard</h3>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<img width="1890" height="961" alt="image" src="https://github.com/user-attachments/assets/b3e9129d-58bc-410d-9f43-ef7ecaf0cb3c" />
 
-## Learning Laravel
+<h3>User Profile</h3>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<img width="1631" height="986" alt="image" src="https://github.com/user-attachments/assets/42515150-c3a5-4324-a83e-77a8656f844d" />
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+<h3>Edit Pop-up</h3>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<img width="1642" height="968" alt="image" src="https://github.com/user-attachments/assets/775f3949-80a0-4960-8b2e-b6eebf9db912" />
