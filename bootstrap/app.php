@@ -13,18 +13,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         
-        // This MUST run first for CORS preflight requests.
+        // 1. Prepend HandleCors to handle those 204 Preflight requests correctly
         $middleware->prepend(\Illuminate\Http\Middleware\HandleCors::class);
 
-        // This is the complete, stateful API middleware group.
-        // It adds all necessary middleware to handle encrypted
-        // cookies and sessions, fixing 419 errors.
-        $middleware->api(append: [
-            \Illuminate\Cookie\Middleware\EncryptCookies::class, // <-- This is the likely culprit
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-        ]);
+        // 2. Enable Sanctum's stateful API behavior (fixes 401/419 issues)
+        $middleware->statefulApi();
 
     })
     ->withExceptions(function (Exceptions $exceptions): void {

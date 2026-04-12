@@ -77,7 +77,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    await axiosClient.post('/logout');
+    try {
+      await handleAuthRequest(() => axiosClient.post('/logout'));
+  } finally {
+      // Ensure user state is cleared even if the server call fails
+      setUser(null);
+      setErrors({});
+    }
     setUser(null);
   };
 

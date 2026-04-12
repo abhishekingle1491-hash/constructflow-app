@@ -49,10 +49,14 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        // Use the web guard for session-based logout
         Auth::guard('web')->logout();
+
+        // Invalidate the session and regenerate the CSRF token
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
+        // Return 204 No Content for SPA compatibility
         return response()->noContent();
     }
 }
