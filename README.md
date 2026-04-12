@@ -18,6 +18,7 @@ The decision to adopt a stateful authentication layer for a stateless applicatio
 
 <img width="1887" height="943" alt="image" src="https://github.com/user-attachments/assets/f52acd91-c018-4fe4-9888-30e63dec6313" />
 
-<h3>Edit Pop-up</h3>
+<h3>Pop-up</h3>
 
-<img width="1642" height="968" alt="image" src="https://github.com/user-attachments/assets/775f3949-80a0-4960-8b2e-b6eebf9db912" />
+<img width="1697" height="977" alt="image" src="https://github.com/user-attachments/assets/a69b0102-228a-4e90-9dfc-f729c105de80" />
+
