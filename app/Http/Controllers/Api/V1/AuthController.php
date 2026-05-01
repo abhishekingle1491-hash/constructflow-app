@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Repositories\AuthRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Jobs\SendWelcomeEmail;
 
 class AuthController extends Controller
 {
@@ -30,6 +31,10 @@ class AuthController extends Controller
         if (!$userId) {
             return response()->json('Cannot create user', 500);
         }
+
+        // 2. DISPATCH THE JOB: This returns control to the user instantly
+        $user = User::find($userId);
+        SendWelcomeEmail::dispatch($user->toArray());
 
         Auth::login(User::find($userId));
         $request->session()->regenerate();
