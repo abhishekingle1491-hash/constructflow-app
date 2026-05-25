@@ -7,16 +7,18 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
-use App\Repositories\AuthRepository;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Jobs\SendWelcomeEmail;
+// 1. Import the INTERFACE, not the concrete class
+use App\Repositories\Interfaces\AuthRepositoryInterface;
 
 class AuthController extends Controller
 {
-    protected $authRepository;
+    //private AuthRepositoryInterface $authRepository;
 
-    public function __construct(AuthRepository $authRepository)
+    public function __construct(private AuthRepositoryInterface $authRepository)
     {
         $this->authRepository = $authRepository;
     }
@@ -39,17 +41,21 @@ class AuthController extends Controller
         Auth::login(User::find($userId));
         $request->session()->regenerate();
 
-        return response()->json(Auth::user(), 201);
+        //return response()->json(Auth::user(), 201);
+        return response()->json(new UserResource(Auth::user()), 201);
     }
 
     public function login(LoginRequest $request)
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
-            throw ValidationException::withMessages();
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials do not match our records.'],
+            ]);
         }
 
         $request->session()->regenerate();
-        return response()->json(Auth::user());
+        //return response()->json(Auth::user());
+        return response()->json(new UserResource(Auth::user()), 201);
     }
 
     public function logout(Request $request)

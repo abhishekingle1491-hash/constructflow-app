@@ -1,15 +1,16 @@
 <?php
 namespace App\Repositories;
 
+use App\Repositories\Interfaces\AuthRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 use stdClass;
 
-class AuthRepository
+class AuthRepository implements AuthRepositoryInterface
 {
     public function findUserByEmail(string $email):?stdClass
     {
-        $results = DB::select('SELECT * FROM users WHERE email =? LIMIT 1', [$email]);
-        return $results?? null;
+        $results = DB::select('SELECT * FROM users WHERE email = ? LIMIT 1', [$email]);
+        return $results[0] ?? null;
     }
 
     public function createUserAndOrganization(array $userData, string $orgName):?int
@@ -17,20 +18,22 @@ class AuthRepository
         try {
             DB::beginTransaction();
 
-            DB::insert(
-                'INSERT INTO organizations (name, created_at, updated_at) VALUES (?, NOW(), NOW())',
-                [$orgName]
-            );
+            // 1. Create Organization via Eloquent
+            $organization = \App\Models\Organization::create([
+                'name' => $orgName
+            ]);
 
-            $orgId = DB::getPdo()->lastInsertId();
-
-            DB::insert('INSERT INTO users (organization_id, name, email, password, created_at, updated_at) VALUES (?,?,?,?, NOW(), NOW())', [$orgId, $userData['name'], $userData['email'], $userData['password']]);
-
-            $userId = DB::getPdo()->lastInsertId();
+            // 2. Create User via Eloquent, linked to Org
+            $user = \App\Models\User::create([
+                'organization_id' => $organization->id,
+                'name' => $userData['name'],
+                'email' => $userData['email'],
+                'password' => $userData['password'], // Already hashed in Controller
+            ]);
 
             DB::commit();
-
-            return (int)$userId;
+            return $user->id;
+            
         } catch (\Exception $e) {
             DB::rollBack();
             // Optionally log the exception

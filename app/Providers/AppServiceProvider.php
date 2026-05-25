@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\Interfaces\AuthRepositoryInterface;
+use App\Repositories\AuthRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,6 +15,11 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+        // The Authentication Binding
+        $this->app->bind(
+            AuthRepositoryInterface::class,
+            AuthRepository::class
+        );
     }
 
     /**
