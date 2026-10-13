@@ -3,6 +3,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\EquipmentController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\MaintenanceController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -20,8 +21,17 @@ Route::get('/debug-session', function () {
 
 // Group routes for API version 1
 Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
+    // Add this bulk route
+    Route::post('equipment/bulk', [EquipmentController::class, 'bulkUpload']);
+    // --- ADD THE BULK DELETE ROUTE HERE ---
+    Route::post('axiosequipment/bulk-delete', [EquipmentController::class, 'bulkDelete']);
     Route::apiResource('equipment', EquipmentController::class);
     // Add other resource routes here as they are built
+    // Add this right below your equipment resource route
+    Route::apiResource('rentals', App\Http\Controllers\Api\V1\RentalController::class);
+    // --- MAINTENANCE ROUTES ---
+    Route::get('equipment/{equipment}/maintenance', [MaintenanceController::class, 'index']);
+    Route::post('equipment/{equipment}/maintenance', [MaintenanceController::class, 'store']); // <-- Make sure this line exists
 });
 
 // Public authentication routes with rate limiting to prevent brute-force attacks.

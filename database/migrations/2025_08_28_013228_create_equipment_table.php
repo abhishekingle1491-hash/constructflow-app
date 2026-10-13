@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('equipment', function (Blueprint $table) {
             $table->id();
-        $table->foreignId('organization_id')->constrained()->onDelete('cascade');
-        $table->string('make')->nullable();
-        $table->string('model')->nullable();
-	$table->string('name');
-	$table->string('status')->default('available');
-        $table->string('serial_number')->index();
-        $table->date('purchase_date')->nullable();
-        $table->string('qr_code_path')->nullable();
-        $table->timestamps();
+            $table->foreignId('organization_id')->constrained()->onDelete('cascade');
+            $table->string('make')->nullable();
+            $table->string('model')->nullable();
+            $table->string('name');
+            $table->string('status')->default('available');
+            $table->string('serial_number')->index()->unique();
+            $table->date('purchase_date')->nullable();
+            $table->string('qr_code_path')->nullable();
+            $table->timestamps();
         });
     }
 
