@@ -1,15 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import App from './app.jsx';
+import App from './app';
 import { AuthProvider } from './contexts/AuthContext'; // <-- 1. Import the provider
+import { ThemeProvider } from './contexts/ThemeContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <HelmetProvider>
-      <AuthProvider> {/* <-- 2. Wrap your <App /> component */}
-        <App />
-      </AuthProvider>
-    </HelmetProvider>
+    <BrowserRouter>
+      <HelmetProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </ThemeProvider>
+      </HelmetProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
