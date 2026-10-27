@@ -1,0 +1,75 @@
+services:
+  app:
+    image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG:-latest}
+    container_name: constructflow-app
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - app-public:/var/www/constructflow/public/build
+    depends_on:
+      - db
+      - redis
+    networks:
+      - constructflow-net
+
+  queue:
+    image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG:-latest}
+    container_name: constructflow-queue
+    restart: unless-stopped
+    env_file: .env
+    command: php artisan queue:work sqs --sleep=3 --tries=3 --max-time=3600
+    depends_on:
+      - app
+    networks:
+      - constructflow-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: constructflow-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+      - app-public:/var/www/constructflow/public/build:ro
+    depends_on:
+      - app
+    networks:
+      - constructflow-net
+
+  db:
+    image: mysql:8.0
+    container_name: constructflow-db
+    restart: unless-stopped
+    # Memory tuning so MySQL uses ~90MB RAM instead of 400MB+
+    command: >
+      --performance-schema=OFF
+      --innodb-buffer-pool-size=64M
+      --innodb-log-buffer-size=4M
+      --max-connections=30
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - constructflow-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: constructflow-redis
+    restart: unless-stopped
+    command: redis-server --maxmemory 32mb --maxmemory-policy allkeys-lru
+    networks:
+      - constructflow-net
+
+volumes:
+  db-data:
+  app-public:
+
+networks:
+  constructflow-net:
+    driver: bridge
