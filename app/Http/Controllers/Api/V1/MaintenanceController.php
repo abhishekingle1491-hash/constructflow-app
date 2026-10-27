@@ -5,28 +5,25 @@ use App\Http\Controllers\Controller;
 use App\Models\Equipment;
 use App\Models\MaintenanceLog;
 use Illuminate\Http\Request;
+use App\Http\Resources\MaintenanceLogResource;
 
 class MaintenanceController extends Controller
 {
     public function index(Request $request, $equipmentId)
     {
         $orgId = $request->user()->organization_id;
-        
-        // Security: Ensure they own the equipment before viewing logs
         Equipment::where('id', $equipmentId)->where('organization_id', $orgId)->firstOrFail();
 
         $logs = MaintenanceLog::where('equipment_id', $equipmentId)
             ->orderBy('maintenance_date', 'desc')
             ->get();
 
-        return response()->json(['data' => $logs]);
+        return MaintenanceLogResource::collection($logs);
     }
 
     public function store(Request $request, $equipmentId)
     {
         $orgId = $request->user()->organization_id;
-
-        // Security: Ensure they own the equipment before logging maintenance
         $equipment = Equipment::where('id', $equipmentId)->where('organization_id', $orgId)->firstOrFail();
 
         $validated = $request->validate([
@@ -43,6 +40,6 @@ class MaintenanceController extends Controller
             'cost'            => $validated['cost'] ?? 0,
         ]));
 
-        return response()->json(['data' => $log], 201);
+        return new MaintenanceLogResource($log);
     }
 }
